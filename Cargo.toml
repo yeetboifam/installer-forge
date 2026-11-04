@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = ["crates/forge", "crates/stub", "crates/forgefmt", "crates/forgeserver"]
+
+# Shared release profile: small, fast stubs matter because the stub binary is
+# what every generated installer is built from.
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

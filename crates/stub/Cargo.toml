@@ -1,0 +1,33 @@
+[package]
+name = "stub"
+version = "0.1.0"
+edition = "2021"
+
+# The install logic lives in the lib; the two bins are thin wrappers that only
+# differ in whether they open a console window on Windows.
+[lib]
+name = "stub"
+path = "src/lib.rs"
+
+# Interactive installer: has a console, prompts for an install dir.
+[[bin]]
+name = "stub"
+path = "src/bin/stub.rs"
+
+# Silent installer: no console window on Windows, installs to the default dir.
+[[bin]]
+name = "stub-silent"
+path = "src/bin/stub-silent.rs"
+
+# Deliberately tiny dependency set: a raw TCP HTTP/1.0 GET (in the lib) avoids
+# ureq -> url -> idna -> icu, which was the bulk of the stub's size.
+[dependencies]
+forgefmt = { path = "../forgefmt" }
+sha2 = "0.10"
+
+# Embeds Windows PE metadata (version info, icon, manifest) so the installer
+# presents as normal, identifiable software instead of a bare unsigned binary.
+# Unconditional so it's available even when cross-compiling to Windows from a
+# non-Windows host; build.rs only invokes it when the *target* is Windows.
+[build-dependencies]
+winresource = "0.1"

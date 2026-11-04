@@ -1,0 +1,16 @@
+[package]
+name = "forgeserver"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "forgeserver"
+path = "src/lib.rs"
+
+# Headless download server for running on a VPS / behind a VPN over SSH.
+[[bin]]
+name = "serve"
+path = "src/bin/serve.rs"
+
+[dependencies]
+tiny_http = "0.12"
